@@ -6,7 +6,7 @@ final class ProviderListingRadius
 {
     /**
      * Maximum distance from the user's point to include a provider (meters).
-     * Default km matches Mashghoul mobile `api.ts` (distance: 180).
+     * Default km matches Yihla mobile `api.ts` (distance: 180).
      */
     public static function maxDistanceMeters(): int
     {

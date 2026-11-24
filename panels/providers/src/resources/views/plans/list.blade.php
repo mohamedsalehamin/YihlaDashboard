@@ -9,7 +9,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" crossorigin="anonymous" />
 <link rel="stylesheet" href="{{ asset('assets/site/css/provider-plans.css') }}" />
 
-<div class="mashghoul-provider-plans join-us-page pb-64 max-w-7xl mx-auto px-4">
+<div class="yihla-provider-plans join-us-page pb-64 max-w-7xl mx-auto px-4">
     {{-- Page title --}}
     <div class="text-center mb-8">
         <h2 class="login-main-title">{{ __('menu.plans') }}</h2>

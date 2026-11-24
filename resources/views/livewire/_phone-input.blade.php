@@ -50,7 +50,7 @@
                 await Promise.resolve(comp.set('phone', phoneVal));
             };
 
-            window.initMashghoulPhoneInput = function () {
+            window.initYihlaPhoneInput = function () {
                 var telInput = document.getElementById('phone');
                 if (!telInput || typeof intlTelInput === 'undefined') return;
                 // Same node after unrelated Livewire morphs — keep existing intl-tel instance.
@@ -99,7 +99,7 @@
 
             function schedulePhoneInit() {
                 queueMicrotask(function () {
-                    if (window.initMashghoulPhoneInput) window.initMashghoulPhoneInput();
+                    if (window.initYihlaPhoneInput) window.initYihlaPhoneInput();
                 });
             }
 

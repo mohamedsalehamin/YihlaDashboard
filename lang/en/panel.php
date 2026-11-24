@@ -1,7 +1,7 @@
 <?php
 return [
     'profile_setup' => [
-        'title' => 'Start your journey with Mashghoul',
+        'title' => 'Start your journey with Yihla',
         'description' => 'Complete your business profile to enable your customers to find you and book appointments professionally.',
         'add_first_chair' => 'Add your first chair (seat)',
         'add_first_service' => 'Add your first service',
@@ -207,7 +207,7 @@ return [
         "order_not_responded" => "Sorry, your order no :id cannot be completed",
         "order_not_responded_body" => "Due to the unavailability of some products in your order, you can order from another branch",
         "new_customer_registered" => "Congratulations",
-        "new_customer_registered_body" => "Your account has been successfully registered in the Mashghoul and more application, order now",
+        "new_customer_registered_body" => "Your account has been successfully registered in the Yihla and more application, order now",
         "new_product_created_title" => "New product created",
         "new_product_created_body" => " :product_name added, you can try it now",
         "order_status_changed" => "Order no :id status changed",

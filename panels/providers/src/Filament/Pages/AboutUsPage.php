@@ -21,7 +21,7 @@ class AboutUsPage extends Page {
         return __('menu.about_us');
     }
     public static function getNavigationGroup(): ?string {
-        return __('menu.mashghoul_pages');
+        return __('menu.yihla_pages');
     }
     public static function getNavigationLabel(): string {
         return __('menu.about_us');

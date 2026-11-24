@@ -11,7 +11,7 @@ Templates requiring updates:
 Follow-up TODOs: None
 -->
 
-# Mashghoul Constitution
+# Yihla Constitution
 
 ## Core Principles
 

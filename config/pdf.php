@@ -11,7 +11,7 @@ return [
     'margin_header' => 0,
     'margin_footer' => 0,
     'orientation' => 'P',
-    'title' => 'Mashghoul',
+    'title' => 'Yihla',
     'custom_font_dir' => base_path('resources/fonts/'), // don't forget the trailing slash!
     'custom_font_data' => [
 //        'din-light' => [ // must be lowercase and snake_case

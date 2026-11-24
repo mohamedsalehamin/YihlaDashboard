@@ -3,7 +3,7 @@
 return [
     'send_email' => 'إرسال بريد إلكتروني',
     'send_sms' => 'إرسال رسالة نصية',
-    'mashghoul_pages' => 'صفحات مشغول',
+    'yihla_pages' => 'صفحات مشغول',
     'join_requests' => 'طلبات الانضمام',
     'join_request' => 'طلب انضمام',
     'sliders' => 'السلايدر',

@@ -5,7 +5,7 @@ return [
     'rate' => 'Rating',
     'send_email' => 'Send emails',
     'send_sms' => 'Send SMS',
-    'mashghoul_pages' => 'Mashghoul pages',
+    'yihla_pages' => 'Yihla pages',
     'join_requests' => 'Join requests',
     'join_request' => 'Join request',
     'seats' => 'Seats',

@@ -1,7 +1,7 @@
 # Laravel 12 Upgrade Report
 
 **Generated:** January 26, 2026  
-**Project:** Mashghoul  
+**Project:** Yihla  
 **Upgrade:** Laravel 10 → Laravel 12
 
 ---

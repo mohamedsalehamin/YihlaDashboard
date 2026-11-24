@@ -6,7 +6,7 @@
         <div class="login-card-wrapper d-flex flex-column flex-lg-row align-items-lg-center">
             <div class="login-form-side col-lg-7 p-4 p-md-5 d-flex flex-column justify-content-center order-2 order-lg-1">
                 <div class="text-center mb-5 mt-2 mt-lg-0">
-                    <h2 class="login-main-title mb-2">{{ __('site.heading.welcome_to_mashghoul')}}</h2>
+                    <h2 class="login-main-title mb-2">{{ __('site.heading.welcome_to_yihla')}}</h2>
                     <p class="text-muted login-subtitle">{{ __('site.heading.login_subtitle')}}</p>
                 </div>
                 @livewire('site.login-form')
