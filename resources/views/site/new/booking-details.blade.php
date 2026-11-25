@@ -70,7 +70,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-lg-12 mt-4">
+            <div class="col-lg-6">
                 <div class="data-card">
                     <h3 class="data-card-title">{{ __('site.heading.operator_details') }}</h3>
                     <div class="data-list custom-data-list">
@@ -83,15 +83,15 @@
                             <span class="value">{{ $provider?->city?->getTranslation('name', $locale) ?? $provider?->city?->name ?? '—' }}</span>
                         </div>
                         <div class="data-item">
-                            <span class="label"><i class="fa-solid fa-angles-left"></i> {{ __('site.heading.show_on_map') }}</span>
+                            <span class="label"><i class="fa-solid fa-angles-left"></i> {{ __('site.heading.geographic_location') }}</span>
                             <a href="{{ $provider ? route('site.provider.map', $provider) : '#' }}" class="value text-danger text-decoration-underline">{{ __('site.heading.show_on_map') }}</a>
                         </div>
                         @if(!empty($workingDaysList))
                         <div class="data-item working-hours">
                             <span class="label flex-shrink-0"><i class="fa-solid fa-angles-left"></i> {{ __('site.heading.working_hours') }}</span>
-                            <div class="d-flex flex-wrap">
+                            <div class="d-flex flex-column align-items-end">
                                 @foreach($workingDaysList as $dayHours)
-                                <span class="value flex-grow-1">{{ $dayHours }}</span>
+                                <span class="value">{{ $dayHours }}</span>
                                 @endforeach
                             </div>
                         </div>
@@ -111,7 +111,7 @@
         <div class="data-card mb-4" id="order-rating-card">
             <h3 class="data-card-title">{{ __('site.heading.order_rate') }}</h3>
             <div class="row">
-                <div class="col-lg-6 mb-4 mb-lg-0 border-end-md">
+                <div class="col-lg-6 mb-4 mb-lg-0 rating-col-divider">
                     <div class="rating-display-item">
                         <div class="rating-header d-flex gap-4 align-items-center mb-2">
                             <div class="rating-label"><i class="fa-solid fa-angles-left me-2"></i>{{ __('site.heading.service') }}</div>
@@ -194,7 +194,7 @@
         @if(!empty($totals))
         <div class="row">
             <div class="col-12">
-                <div class="data-card cost-details">
+                <div class="data-card cost-summary">
                     <h3 class="data-card-title mb-4">{{ __('site.heading.cost_details') }}</h3>
                     <div class="grid-cost-list">
                         @if(!empty($totals['services_total']) && $totals['services_total'] != '0.00')
@@ -230,7 +230,7 @@
                     </div>
                     <div class="cost-divider-horizontal"></div>
                     <div class="row g-0 cost-footer-row">
-                        <div class="col-md-6 cost-col cost-col-right border-end-md">
+                        <div class="col-md-6 cost-col cost-col-right">
                             <div class="final-total">
                                 <span class="label">{{ __('site.heading.final_total') }}</span>
                                 <span class="value">{{ $totals['total'] ?? $reservation->price->formatByDecimal() }} <i class="icon-saudi_riyal"></i></span>

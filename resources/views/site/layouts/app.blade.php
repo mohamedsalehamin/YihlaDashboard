@@ -32,7 +32,7 @@ $assetBase = asset('assets/site');
     <link rel="stylesheet" href="{{ $assetBase }}/css/all.min.css">
     <link rel="stylesheet" href="{{ $assetBase }}/css/animate.css">
     <link rel="stylesheet" href="{{ $assetBase }}/css/swiper-bundle.min.css">
-    <link rel="stylesheet" href="{{ $assetBase }}/css/main.css">
+    <link rel="stylesheet" href="{{ $assetBase }}/css/main.css?v={{ @filemtime(public_path('assets/site/css/main.css')) }}">
     <title>{{ $title ?? __('site.heading.home') }} - {{ config('app.name', 'Yihla') }}</title>
 
     @stack('meta')
@@ -170,7 +170,8 @@ $assetBase = asset('assets/site');
 <script src="{{ $assetBase }}/js/bootstrap.min.js"></script>
 <script src="{{ $assetBase }}/js/wow.min.js"></script>
 <script src="{{ $assetBase }}/js/swiper-bundle.min.js"></script>
-<script src="{{ $assetBase }}/js/main.js"></script>
+<script src="{{ $assetBase }}/js/main.js?v={{ @filemtime(public_path('assets/site/js/main.js')) }}"></script>
+<script src="{{ $assetBase }}/js/yihla-design.js?v={{ @filemtime(public_path('assets/site/js/yihla-design.js')) }}"></script>
 @stack('scripts')
 
 @stack("scripts")

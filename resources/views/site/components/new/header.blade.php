@@ -1,6 +1,10 @@
 @php
     $assetBase = asset('assets/site');
     $locale = app()->getLocale();
+    $uploadedLogo = data_get(app(\App\DefaultPanel\Settings\LandingSettings::class)->logos, $locale);
+    $headerLogo = $uploadedLogo && \Illuminate\Support\Facades\Storage::disk('public')->exists($uploadedLogo)
+        ? asset('storage/'.$uploadedLogo)
+        : ($locale === 'ar' ? $assetBase.'/images/logo.png' : $assetBase.'/images/logo-en.png');
 @endphp
 <!-- Start Header -->
 <header class="header">
@@ -13,7 +17,7 @@
             </button>
 
             <a href="{{ route('site.home') }}" class="logo-img" aria-label="logo">
-                <img class="img-fluid" src="{{ $locale === 'ar' ? $assetBase.'/images/logo.png' : $assetBase.'/images/logo-en.png' }}" alt="logo">
+                <img class="img-fluid" src="{{ $headerLogo }}" alt="logo">
             </a>
 
             <nav class="navigation">

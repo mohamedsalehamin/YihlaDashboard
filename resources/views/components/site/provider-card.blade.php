@@ -1,6 +1,7 @@
 @props([
     'provider',
     'showMapButton' => true,
+    'favoriteList' => false,
 ])
 @php
     $locale = app()->getLocale();
@@ -11,7 +12,7 @@
 @endphp
 <div class="single-product-card">
     <div class="product-img">
-        <div class="add-to-wishlist {{ $isFavorited ? 'active' : '' }}"
+        <div class="add-to-wishlist {{ ($isFavorited || $favoriteList) ? 'active' : '' }}"
              role="button"
              tabindex="0"
              data-favorite-toggle
@@ -47,9 +48,22 @@
         @if($showMapButton && isset($provider->distance))
             <div class="distance">{{ __('site.heading.distance_approx') }} {{ number_format($provider->distance / 1000, 1) }} كم</div>
         @endif
-        @if($showMapButton && Route::has('site.provider.map'))
-            <a href="{{ route('site.provider.map', ['provider' => $providerProfileKey]) }}" class="btn btn-green w-100"><i class="fa-regular fa-map"></i> {{ __('site.buttons.show_on_map') }}</a>
+        @if($favoriteList)
+            <div class="card-btns">
+                @if(Route::has('site.provider.map'))
+                    <a href="{{ route('site.provider.map', ['provider' => $providerProfileKey]) }}" class="btn btn-green"><i class="fa-regular fa-map"></i> {{ __('site.buttons.show_on_map') }}</a>
+                @endif
+                <button type="button" class="btn btn-red"
+                    data-favorite-toggle
+                    data-url="{{ route('site.provider.favorite.toggle', ['provider' => $providerProfileKey]) }}"
+                    data-initial-state="1"
+                    aria-label="{{ __('site.buttons.remove') }}"><i class="fa-regular fa-trash-can"></i></button>
+            </div>
+        @else
+            @if($showMapButton && Route::has('site.provider.map'))
+                <a href="{{ route('site.provider.map', ['provider' => $providerProfileKey]) }}" class="btn btn-blue w-100"><i class="fa-solid fa-location-dot"></i> {{ __('site.buttons.show_on_map') }}</a>
+            @endif
+            <a href="{{ route('site.provider.show', ['provider' => $providerProfileKey]) }}" class="btn btn-green w-100 mt-2"><i class="fa-regular fa-calendar"></i> {{ __('site.buttons.book_service') }}</a>
         @endif
-        <a href="{{ route('site.provider.show', ['provider' => $providerProfileKey]) }}" class="btn btn-green-outline w-100 mt-2">{{ __('site.buttons.book_service') }}</a>
     </div>
 </div>

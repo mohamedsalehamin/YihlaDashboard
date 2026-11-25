@@ -43,6 +43,44 @@ class ManageLanding extends SettingsPage {
                 FileUpload::make('logos.en')
                     ->label(__('forms.fields.logo_in_english'))
                     ->required(),
+                Section::make("about_us")
+                    ->label(__("sections.about_us"))
+                    ->schema([
+                        Tabs::make()->schema([
+                            Tab::make(__("panel.languages.arabic"))->schema([
+                                TextInput::make('title')
+                                    ->label(__('forms.fields.address'))
+                                    ->required(),
+                                Textarea::make('description')
+                                    ->label(__('forms.fields.description'))
+                                    ->rows(5)
+                                    ->required(),
+                                TextInput::make('link')
+                                    ->label(__('forms.fields.link'))
+                                    ->url(),
+                                FileUpload::make('image')
+                                    ->label(__("forms.fields.image"))
+                                    ->image(),
+                            ])->statePath("about.ar"),
+
+                            Tab::make(__("panel.languages.english"))->schema([
+                                TextInput::make('title')
+                                    ->label(__('forms.fields.address'))
+                                    ->required(),
+                                Textarea::make('description')
+                                    ->label(__('forms.fields.description'))
+                                    ->rows(5)
+                                    ->required(),
+                                TextInput::make('link')
+                                    ->label(__('forms.fields.link'))
+                                    ->url(),
+                                FileUpload::make('image')
+                                    ->label(__("forms.fields.image"))
+                                    ->image(),
+                            ])->statePath("about.en"),
+                        ]),
+                    ])->statePath('content'),
+
                 Section::make("app_download")
                     ->label(__("sections.app_download"))
                     ->schema([

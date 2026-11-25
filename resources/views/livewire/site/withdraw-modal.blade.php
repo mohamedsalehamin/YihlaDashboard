@@ -12,36 +12,31 @@
                 <div class="modal-body text-start mt-4 px-4">
                     <div class="common-form">
                         <div class="mb-3">
-                            <label for="withdraw-amount" class="form-label">{{ __('site.fields.amount') }}</label>
-                            <input id="withdraw-amount" type="number" step="0.01" min="1" class="form-control {{ isset($withdrawErrors['amount']) ? 'is-invalid' : '' }}" placeholder="{{ __('site.fields.amount') }}" wire:model="amount">
+                            <input id="withdraw-amount" aria-label="{{ __('site.fields.amount') }}" type="number" step="0.01" min="1" class="form-control {{ isset($withdrawErrors['amount']) ? 'is-invalid' : '' }}" placeholder="{{ __('site.fields.amount') }}" wire:model="amount">
                             @if(isset($withdrawErrors['amount']))
                                 <div class="invalid-feedback d-block">{{ $withdrawErrors['amount'][0] }}</div>
                             @endif
                         </div>
                         <div class="mb-3">
-                            <label for="withdraw-bank_name" class="form-label">{{ __('site.fields.bank_name') }}</label>
-                            <input id="withdraw-bank_name" type="text" class="form-control {{ isset($withdrawErrors['bank_name']) ? 'is-invalid' : '' }}" placeholder="{{ __('site.fields.bank_name') }}" wire:model="bank_name">
+                            <input id="withdraw-bank_name" aria-label="{{ __('site.fields.bank_name') }}" type="text" class="form-control {{ isset($withdrawErrors['bank_name']) ? 'is-invalid' : '' }}" placeholder="{{ __('site.fields.bank_name') }}" wire:model="bank_name">
                             @if(isset($withdrawErrors['bank_name']))
                                 <div class="invalid-feedback d-block">{{ $withdrawErrors['bank_name'][0] }}</div>
                             @endif
                         </div>
                         <div class="mb-3">
-                            <label for="withdraw-account_name" class="form-label">{{ __('site.fields.account_name') }}</label>
-                            <input id="withdraw-account_name" type="text" class="form-control {{ isset($withdrawErrors['account_name']) ? 'is-invalid' : '' }}" placeholder="{{ __('site.fields.account_name') }}" wire:model="account_name">
+                            <input id="withdraw-account_name" aria-label="{{ __('site.fields.account_name') }}" type="text" class="form-control {{ isset($withdrawErrors['account_name']) ? 'is-invalid' : '' }}" placeholder="{{ __('site.fields.account_name') }}" wire:model="account_name">
                             @if(isset($withdrawErrors['account_name']))
                                 <div class="invalid-feedback d-block">{{ $withdrawErrors['account_name'][0] }}</div>
                             @endif
                         </div>
                         <div class="mb-3">
-                            <label for="withdraw-account_number" class="form-label">{{ __('site.fields.account_number') }}</label>
-                            <input id="withdraw-account_number" type="text" class="form-control {{ isset($withdrawErrors['account_number']) ? 'is-invalid' : '' }}" placeholder="{{ __('site.fields.account_number') }}" wire:model="account_number">
+                            <input id="withdraw-account_number" aria-label="{{ __('site.fields.account_number') }}" type="text" class="form-control {{ isset($withdrawErrors['account_number']) ? 'is-invalid' : '' }}" placeholder="{{ __('site.fields.account_number') }}" wire:model="account_number">
                             @if(isset($withdrawErrors['account_number']))
                                 <div class="invalid-feedback d-block">{{ $withdrawErrors['account_number'][0] }}</div>
                             @endif
                         </div>
                         <div class="mb-3">
-                            <label for="withdraw-iban" class="form-label">{{ __('site.fields.iban') }}</label>
-                            <input id="withdraw-iban" type="text" class="form-control {{ isset($withdrawErrors['iban']) ? 'is-invalid' : '' }}" placeholder="{{ __('site.fields.iban') }}" wire:model="iban">
+                            <input id="withdraw-iban" aria-label="{{ __('site.fields.iban') }}" type="text" class="form-control {{ isset($withdrawErrors['iban']) ? 'is-invalid' : '' }}" placeholder="{{ __('site.fields.iban') }}" wire:model="iban">
                             @if(isset($withdrawErrors['iban']))
                                 <div class="invalid-feedback d-block">{{ $withdrawErrors['iban'][0] }}</div>
                             @endif

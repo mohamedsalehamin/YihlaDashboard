@@ -14,7 +14,7 @@
 </div>
 <!-- End Breadcrumb -->
 
-<div class="common-page-wrapper pb-64">
+<div class="common-page-wrapper products-section favourites-page pb-64">
     <div class="container">
         @livewire('site.profile-favorites-list')
     </div>

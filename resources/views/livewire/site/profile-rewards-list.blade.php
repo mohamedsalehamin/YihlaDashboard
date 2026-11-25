@@ -14,7 +14,7 @@
             <div class="tier-name">{{ $bestOption->title }}</div>
             <div class="points-info">
                 <div class="points-display">{{ number_format($totalPoints) }}</div>
-                <div class="points-value">{{ __('site.heading.exchanged_value') }} <i class="icon-saudi_riyal"></i> {{ $bestOption->price instanceof \Cknow\Money\Money ? number_format((float) $bestOption->price->formatByDecimal(), 0) : number_format((float) $bestOption->price, 0) }}</div>
+                <div class="points-value">{{ __('site.heading.exchanged_value') }} <span class="val">{{ $bestOption->price instanceof \Cknow\Money\Money ? number_format((float) $bestOption->price->formatByDecimal(), 0) : number_format((float) $bestOption->price, 0) }} <i class="icon-saudi_riyal"></i></span></div>
             </div>
             <button class="btn btn-green redeem-btn" type="button" data-bs-toggle="modal" data-bs-target="#redeem-modal">
                 {{ __('site.heading.redeem_points') }}

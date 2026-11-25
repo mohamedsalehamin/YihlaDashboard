@@ -19,9 +19,7 @@
             <div class="book-success-wrapper">
                 <div class="book-success-card">
 
-                    <div class="success-icon-wrapper">
-                        <i class="fa-solid fa-check success-check-icon"></i>
-                    </div>
+                    <img class="success-icon img-fluid" src="{{ asset('assets/site/images/done.webp') }}" alt="">
 
                     @if($status === 'success')
                         <h1 class="success-title">{{ __('site.heading.booking_completed') }}</h1>

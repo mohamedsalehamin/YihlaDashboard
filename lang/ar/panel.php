@@ -1,7 +1,7 @@
 <?php
 return [
     'profile_setup' => [
-        'title' => 'ابدأ رحلتك مع مشغول',
+        'title' => 'ابدأ رحلتك مع يَحْلى',
         'description' => 'أكمل بيانات منشأتك لتفعيل ظهورك للعملاء واستقبال الحجوزات بكل احترافية.',
         'add_first_chair' => 'أضف أول كرسي (مقعد)',
         'add_first_service' => 'أضف أول خدمة',
@@ -272,7 +272,7 @@ return [
         "order_not_responded" => "نعتذر لعدم استكمال الطلب رقم :id",
         "order_not_responded_body" => "بسبب عدم توافر بعض المنتجات في طلبكم يمكنك الطلب من فرع اخر",
         "new_customer_registered" => "تهانينا",
-        "new_customer_registered_body" => "تم تسجيل حسابك بنجاح في تطبيق مشغول، اطلب ألإن",
+        "new_customer_registered_body" => "تم تسجيل حسابك بنجاح في تطبيق يَحْلى، اطلب ألإن",
         "new_product_created_title" => "منتج جديد تم إضافته",
         "new_product_created_body" => " تم إضافة  :product_name يمكن تجربته ألإن",
         "order_status_changed" => "تم تغير حالة الطلب ",

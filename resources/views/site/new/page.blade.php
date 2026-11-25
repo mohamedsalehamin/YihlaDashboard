@@ -1,7 +1,12 @@
 @extends('site.layouts.app')
 
 @section('content')
-@php $locale = app()->getLocale(); @endphp
+@php
+    $locale = app()->getLocale();
+    $landingSettings = app(\App\DefaultPanel\Settings\LandingSettings::class);
+    $isAboutPage = (int) data_get($landingSettings->content, 'site_pages.about_us') === (int) $page->id;
+    $aboutIntro = $isAboutPage ? data_get($landingSettings->content, 'about.'.$locale, []) : [];
+@endphp
 
 <!-- Start Breadcrumb -->
 <div class="container">
@@ -19,6 +24,23 @@
         <div class="text-center">
             <h1 class="section-title mb-5">{{ $page->getTranslation('title', $locale) }}</h1>
         </div>
+
+        @if(!empty($aboutIntro['about']) || !empty($aboutIntro['image']))
+            <div class="row align-items-md-center mb-5">
+                <div class="col-lg-6">
+                    <div class="about-wrapper">
+                        <div class="about-content">
+                            <p class="description">{{ $aboutIntro['about'] ?? '' }}</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-5 offset-lg-1">
+                    @if(!empty($aboutIntro['image']))
+                        <img src="{{ $aboutIntro['image'] }}" loading="lazy" alt="{{ $page->getTranslation('title', $locale) }}" class="about-img img-fluid">
+                    @endif
+                </div>
+            </div>
+        @endif
 
         <div class="page-content">
             {!! $page->getTranslation('description', $locale) !!}

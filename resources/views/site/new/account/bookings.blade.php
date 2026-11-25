@@ -16,12 +16,15 @@
 
 <div class="common-page-wrapper pb-64">
     <div class="container">
-
-        <div class="text-center">
-            <h1 class="section-title mb-5">{{ __('site.heading.my_bookings') }}</h1>
+        <div class="row">
+            <div class="col-lg-3">
+                @include('site.components.new.account-sidebar')
+            </div>
+            <div class="col-lg-8 offset-lg-1">
+                <div class="section-title fz32">{{ __('site.heading.my_bookings') }}</div>
+                @livewire('site.profile-reservations-list')
+            </div>
         </div>
-        @livewire('site.profile-reservations-list')
     </div>
-
 </div>
 @endsection

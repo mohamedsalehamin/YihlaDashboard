@@ -7,7 +7,7 @@
             <div class="login-form-side col-lg-7 p-4 p-md-5 d-flex flex-column justify-content-center order-2 order-lg-1">
                 <div class="text-center mb-5 mt-2 mt-lg-0">
                     <h2 class="login-main-title mb-2">{{ __('site.heading.register_as_customer') ?? 'إنشاء حساب' }}</h2>
-                    <p class="text-muted login-subtitle">{{ __('site.heading.register_subtitle') ?? 'انضم لمشغول واحجز خدماتك بسهولة' }}</p>
+                    <p class="text-muted login-subtitle">{{ __('site.heading.register_subtitle') ?? 'انضم ليَحْلى واحجز خدماتك بسهولة' }}</p>
                 </div>
                 @livewire('site.customer-register-form')
             </div>

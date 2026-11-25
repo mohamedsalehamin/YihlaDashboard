@@ -10,7 +10,7 @@
 <!-- Hero Section -->
 <section class="hero-section">
     @if($heroBanners->isEmpty())
-        <img src="{{ $assetBase }}/images/hero-banner_optmized.webp" class="img-fluid" alt>
+        <img src="{{ $assetBase }}/images/hero-banner_optmized.webp" class="full-width img-fluid" alt>
     @elseif($heroBanners->count() === 1)
         @php $b = $heroBanners->first(); @endphp
         <a href="{{ $b->object_type === 'link' ? ($b->object_id ?? '#') : ($b->object_type === 'category' ? route('site.category.show', $b->object_id) : ($b->object_type === 'provider' ? (Route::has('site.provider.show') ? route('site.provider.show', $b->object_id) : '#') : '#')) }}">
@@ -77,23 +77,39 @@
 </section>
 @endif
 
-@if(!empty($aboutUs[$locale]))
+@php
+    $aboutData = $aboutUs[$locale] ?? [];
+    $aboutPageId = data_get($landingSettings->content, 'site_pages.about_us');
+    $aboutPage = $aboutPageId ? \App\ContentModule\Models\Page::find($aboutPageId) : null;
+    $aboutTitle = $aboutData['title'] ?? '';
+    $aboutText = $aboutData['description'] ?? ($aboutData['about'] ?? '');
+    $aboutLink = $aboutData['link'] ?? null;
+    if (blank($aboutLink) && $aboutPage) {
+        $aboutLink = route('site.page', $aboutPage->slug);
+    }
+    $aboutImageRaw = (string) ($aboutData['image'] ?? '');
+    $aboutImage = $aboutImageRaw === ''
+        ? $assetBase.'/images/about.webp'
+        : (str_starts_with($aboutImageRaw, 'http') ? $aboutImageRaw : \Illuminate\Support\Facades\Storage::url($aboutImageRaw));
+@endphp
+@if(filled($aboutText) || filled($aboutTitle))
 <!-- About Us -->
 <section class="about-us-section">
     <div class="container">
-        <div class="section-title text-center">{{ $aboutUs[$locale]['title'] ?? '' }}</div>
+        <div class="section-title text-center">{{ $aboutTitle }}</div>
         <div class="row align-items-md-center">
             <div class="col-lg-6">
                 <div class="about-wrapper">
                     <div class="about-content">
-                        <p class="description">{{ $aboutUs[$locale]['about'] ?? '' }}</p>
+                        <p class="description">{{ $aboutText }}</p>
+                        @if(filled($aboutLink))
+                            <a href="{{ $aboutLink }}" class="btn btn-blue about-btn">{{ __('site.buttons.learn_more') }}</a>
+                        @endif
                     </div>
                 </div>
             </div>
             <div class="col-lg-5 offset-lg-1">
-                @if(!empty($aboutUs[$locale]['image']))
-                    <img src="{{ $aboutUs[$locale]['image'] }}" loading="lazy" alt="about" class="about-img img-fluid">
-                @endif
+                <img src="{{ $aboutImage }}" loading="lazy" alt="{{ $aboutTitle }}" class="about-img img-fluid">
             </div>
         </div>
     </div>
@@ -103,21 +119,18 @@
 @if($locationSet ?? false)
     <section class="products-section pt-64">
         <div class="container">
-            <div class="section-title text-center">{{ __('site.heading.nearest_to_you') }}</div>
-            <div class="nearest-providers-swiper products-swiper swiper swiper-x-padding">
-                <div class="swiper-wrapper">
-                    @forelse($nearestProviders as $provider)
-                        <div class="swiper-slide">
-                            <x-site.provider-card :provider="$provider" :show-map-button="true" />
-                        </div>
-                    @empty
-                        <div class="swiper-slide"><div class="single-product-card text-center text-muted py-4">{{ __('site.no_data') ?? 'لا توجد بيانات' }}</div></div>
-                    @endforelse
-                </div>
-                <div class="swiper-pagination"></div>
+            <div class="section-head">
+                <div class="section-title text-center">{{ __('site.heading.nearest_to_you') }}</div>
+                <a href="{{ route('site.providers.nearest') }}" class="view-all-link">{{ __('site.heading.show_all') }} <i class="fa-solid fa-arrow-{{ $locale === 'ar' ? 'left' : 'right' }}"></i></a>
             </div>
-            <div class="text-center">
-                <a href="{{ route('site.providers.nearest') }}" class="btn btn-blue">{{ __('site.heading.show_all') }}</a>
+            <div class="row g-3">
+                @forelse($nearestProviders->take(4) as $provider)
+                    <div class="col-xl-3 col-md-6 col-12">
+                        <x-site.provider-card :provider="$provider" :show-map-button="true" />
+                    </div>
+                @empty
+                    <div class="col-12"><div class="single-product-card text-center text-muted py-4">{{ __('site.no_data') ?? 'لا توجد بيانات' }}</div></div>
+                @endforelse
             </div>
         </div>
     </section>
@@ -127,21 +140,18 @@
 <!-- Start Products Section: Most rated -->
 <section class="products-section pt-64">
     <div class="container">
-        <div class="section-title text-center">{{ __('site.heading.most_rated') }}</div>
-        <div class="most-rated-providers-swiper products-swiper swiper swiper-x-padding">
-            <div class="swiper-wrapper">
-                @forelse($mostRatedProviders as $provider)
-                    <div class="swiper-slide">
-                        <x-site.provider-card :provider="$provider" :show-map-button="true" />
-                    </div>
-                @empty
-                    <div class="swiper-slide"><div class="single-product-card text-center text-muted py-4">{{ __('site.no_data') ?? 'لا توجد بيانات' }}</div></div>
-                @endforelse
-            </div>
-            <div class="swiper-pagination"></div>
+        <div class="section-head">
+            <div class="section-title text-center">{{ __('site.heading.most_rated') }}</div>
+            <a href="{{ route('site.providers.most-rated') }}" class="view-all-link">{{ __('site.heading.show_all') }} <i class="fa-solid fa-arrow-{{ $locale === 'ar' ? 'left' : 'right' }}"></i></a>
         </div>
-        <div class="text-center">
-            <a href="{{ route('site.providers.most-rated') }}" class="btn btn-blue">{{ __('site.heading.show_all') }}</a>
+        <div class="row g-3">
+            @forelse($mostRatedProviders->take(4) as $provider)
+                <div class="col-xl-3 col-md-6 col-12">
+                    <x-site.provider-card :provider="$provider" :show-map-button="true" />
+                </div>
+            @empty
+                <div class="col-12"><div class="single-product-card text-center text-muted py-4">{{ __('site.no_data') ?? 'لا توجد بيانات' }}</div></div>
+            @endforelse
         </div>
     </div>
 </section>
@@ -278,7 +288,6 @@
                 </div>
                 @endforeach
             </div>
-            <div class="swiper-pagination"></div>
         </div>
     </div>
 </section>

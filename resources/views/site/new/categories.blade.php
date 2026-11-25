@@ -20,12 +20,13 @@
     </nav>
 </div>
 
-<div class="common-page-wrapper pb-64">
+<div class="common-page-wrapper category-page products-section pb-64">
     <div class="container">
         @if($showProviderResults)
-            <h1 class="section-title mb-4">{{ __('site.heading.search_results') }}</h1>
+            <div class="page-head"><h1 class="page-title">{{ __('site.heading.search_results') }}</h1>
+        </div>
 
-            <form method="get" action="{{ route('site.categories') }}" class="filter-by d-flex flex-wrap justify-content-end align-items-center gap-2 mb-4">
+            <form id="categories-filter-form" method="get" action="{{ route('site.categories') }}" class="filter-by d-flex flex-wrap justify-content-end align-items-center gap-2 mb-4">
                 @if(request()->filled('city_id'))
                     <input type="hidden" name="city_id" value="{{ request('city_id') }}">
                 @endif
@@ -37,19 +38,19 @@
                     <button type="submit" class="btn btn-green" aria-label="{{ __('site.fields.search') }}"><i class="fa-light fa-magnifying-glass"></i></button>
                 </div>
                 <select name="sort" class="form-select custom-select w-auto" onchange="this.form.submit()" aria-label="{{ __('site.heading.category_sort_label') }}">
-                    <option value="">{{ __('site.heading.category_sort_label') }}</option>
-                    <option value="nearest" {{ request('sort') === 'nearest' || (! filled(request('sort')) && ($sortDefaultsToNearest ?? false)) ? 'selected' : '' }}>{{ __('site.heading.category_sort_nearest') }}</option>
-                    <option value="farthest" {{ request('sort') == 'farthest' ? 'selected' : '' }}>{{ __('site.heading.category_sort_farthest') }}</option>
-                    <option value="date_desc" {{ request('sort') == 'date_desc' ? 'selected' : '' }}>{{ __('site.heading.category_sort_newest') }}</option>
-                    <option value="date_asc" {{ request('sort') == 'date_asc' ? 'selected' : '' }}>{{ __('site.heading.category_sort_oldest') }}</option>
-                    <option value="rating_desc" {{ request('sort') == 'rating_desc' ? 'selected' : '' }}>{{ __('site.heading.category_sort_rating_high') }}</option>
-                    <option value="rating_asc" {{ request('sort') == 'rating_asc' ? 'selected' : '' }}>{{ __('site.heading.category_sort_rating_low') }}</option>
-                </select>
+                        <option value="">{{ __('site.heading.category_sort_label') }}</option>
+                        <option value="nearest" {{ request('sort') === 'nearest' || (! filled(request('sort')) && ($sortDefaultsToNearest ?? false)) ? 'selected' : '' }}>{{ __('site.heading.category_sort_nearest') }}</option>
+                        <option value="farthest" {{ request('sort') == 'farthest' ? 'selected' : '' }}>{{ __('site.heading.category_sort_farthest') }}</option>
+                        <option value="date_desc" {{ request('sort') == 'date_desc' ? 'selected' : '' }}>{{ __('site.heading.category_sort_newest') }}</option>
+                        <option value="date_asc" {{ request('sort') == 'date_asc' ? 'selected' : '' }}>{{ __('site.heading.category_sort_oldest') }}</option>
+                        <option value="rating_desc" {{ request('sort') == 'rating_desc' ? 'selected' : '' }}>{{ __('site.heading.category_sort_rating_high') }}</option>
+                        <option value="rating_asc" {{ request('sort') == 'rating_asc' ? 'selected' : '' }}>{{ __('site.heading.category_sort_rating_low') }}</option>
+                    </select>
             </form>
 
-            <div class="row">
+            <div class="row g-3 g-lg-4">
                 @forelse($providers as $provider)
-                    <div class="col-lg-3 col-md-4 col-6 mb-4">
+                    <div class="col-6 col-md-4 col-lg-3">
                         <x-site.provider-card :provider="$provider" :show-map-button="true" />
                     </div>
                 @empty
@@ -63,10 +64,10 @@
                 @endforelse
             </div>
         @else
-            <h1 class="section-title mb-4">{{ __('site.heading.categories') }}</h1>
-            <div class="row">
+            <div class="page-head"><h1 class="page-title">{{ __('site.heading.categories') }}</h1></div>
+            <div class="row g-3 g-lg-4">
                 @forelse($categories as $cat)
-                    <div class="col-6 col-md-4 col-lg-3 mb-4">
+                    <div class="col-6 col-md-4 col-lg-3">
                         <div class="single-category-card">
                             <a href="{{ route('site.category.show', $cat->getSlugUrl()) }}">
                                 <div class="cat-img">

@@ -64,7 +64,7 @@ class BookingController extends Controller
             $productsArray = $products->map(fn ($p) => [
                 'id' => $p->id,
                 'quantity' => $p->quantity ?? 1,
-                'name' => is_array($p->title ?? null) ? ($p->getTranslation('title', app()->getLocale()) ?? '') : ($p->title ?? ''),
+                'name' => is_array($p->title ?? null) ? (Arr::get($p->title, app()->getLocale()) ?? Arr::first($p->title) ?? '') : ($p->title ?? ''),
                 'price' => $p->price->formatByDecimal(),
                 'total_price' => \Cknow\Money\Money::parse((! $p->sale_price->isZero() ? $p->sale_price->formatByDecimal() : $p->price->formatByDecimal()) * ($p->quantity ?? 1))->formatByDecimal(),
             ])->values()->toArray();
@@ -201,7 +201,7 @@ class BookingController extends Controller
                 ];
                 $products = collect(Arr::get($item->attributes ?? [], 'products', []));
                 foreach ($products as $product) {
-                    $pName = is_object($product) ? (is_array($product->title ?? null) ? ($product->getTranslation('title', app()->getLocale()) ?? '') : ($product->title ?? '')) : '—';
+                    $pName = is_object($product) ? (is_array($product->title ?? null) ? (Arr::get($product->title, app()->getLocale()) ?? Arr::first($product->title) ?? '') : ($product->title ?? '')) : '—';
                     $servicesList[] = [
                         'name' => $pName,
                         'duration' => 0,

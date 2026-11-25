@@ -70,11 +70,11 @@
                     $planName = $plan->displayName();
                 @endphp
                 <div
-                    class="col-lg-4 mb-4"
+                    class="col-xl-3 col-lg-6 mb-4"
                     wire:key="join-plan-{{ $plan->id }}-{{ $selectedPeriod }}-{{ $planPrice->id }}"
                     @if($plansCount === 1) style="max-width:420px;margin-inline:auto;" @endif
                 >
-                    <div class="package-card {{ $plan->is_free ? 'feature-package' : '' }}">
+                    <div class="package-card">
                         <h4 class="package-title">{{ $planName }}</h4>
 
                         <div class="text-center mb-4 p-4">
@@ -93,7 +93,7 @@
 
                             <a
                                 href="{{ route('site.join.register', ['plan' => $plan->id, 'plan_price' => $planPrice->id, 'payment' => $paymentMethod]) }}"
-                                class="btn {{ $plan->is_free ? 'btn-green' : 'btn-blue' }} w-100 mt-2 d-inline-block text-center"
+                                class="btn btn-blue w-100 mt-2 d-inline-block text-center"
                             >
                             @if($plan->is_free)
                                 {{ __('site.join.start_for_free') }}
@@ -103,7 +103,7 @@
                             </a>
                         </div>
 
-                        <h6 class="package-features-title mb-3 px-4">{{ __('forms.fields.features') }}</h6>
+                        <h6 class="package-features-title mb-3 px-4">{{ __('site.join.features') }}</h6>
                         <ul class="list-unstyled mb-0 px-4">
                             @if($plan->commission_percent !== null && $plan->commission_percent !== '')
                                 <li class="package-feature">

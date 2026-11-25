@@ -17,65 +17,51 @@
     </nav>
 </div>
 <!-- End Breadcrumb -->
-<div class="gallery-section mt-5 mb-5">
+@php
+    $galleryItems = collect($portfolio ?? [])->flatMap(fn ($album) => $album['items'] ?? [])->values();
+    $galleryTypes = $galleryItems->map(fn ($item) => in_array($item['type'] ?? '', ['video', 'audio'], true) ? $item['type'] : 'image')->unique();
+@endphp
+<div class="gallery-section mt-4 mb-5">
     <div class="container">
-        @forelse($portfolio ?? [] as $album)
-        <div class="gallery-section-wrapper mb-4">
-            <h3 class="data-card-title">{{ $album['title'] ?: __('site.heading.gallery') }}</h3>
-            <div class="row">
-                @foreach($album['items'] ?? [] as $item)
-                <div class="col-lg-3 col-6 mb-4">
-                    <div class="single-gallery-card p-0 border-0 h-100 bg-transparent shadow-none">
-                        @if(($item['type'] ?? '') === 'video')
-                        <div class="testimonial-media-wrapper m-0 rounded-4 overflow-hidden shadow-sm h-100"
-                            style="cursor: pointer;"
-                            role="button"
-                            tabindex="0"
-                            onclick="openMediaModal('video', @js($item['url']), @js($item['title'] ?? ''), @js($item['description'] ?? ''))"
-                            onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();this.click();}">
-                            <img src="{{ $assetBase }}/images/about.webp" class="testimonial-media-img testimonial-video-thumb" alt="{{ $item['title'] ?? '' }}" data-video-thumbnail="{{ e($item['url']) }}">
-                            <div class="play-overlay-btn">
-                                <i class="fa-solid fa-play"></i>
-                            </div>
-                        </div>
-                        @elseif(($item['type'] ?? '') === 'audio')
-                        <div class="testimonial-media-wrapper testimonial-media-wrapper--dark m-0 rounded-4 overflow-hidden shadow-sm h-100"
-                            style="cursor: pointer;"
-                            role="button"
-                            tabindex="0"
-                            onclick="openMediaModal('audio', @js($item['url']), @js($item['title'] ?? ''), @js($item['description'] ?? ''))"
-                            onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();this.click();}">
-                            <div class="audio-player-wrapper">
-                                <span class="btn btn-blue play-audio-btn d-flex align-items-center justify-content-center" style="pointer-events: none;" aria-hidden="true">
-                                    <i class="fa-solid fa-headphones"></i>
-                                </span>
-                                <img src="{{ $assetBase }}/images/audio-waves.png" class="waveform-img" alt="">
-                            </div>
-                        </div>
-                        @else
-                        <div class="testimonial-media-wrapper m-0 rounded-4 overflow-hidden shadow-sm h-100"
-                            style="cursor: pointer;"
-                            role="button"
-                            tabindex="0"
-                            onclick="openMediaModal('image', @js($item['url']), @js($item['title'] ?? ''), @js($item['description'] ?? ''))"
-                            onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();this.click();}">
-                            <img src="{{ $item['url'] }}" class="testimonial-media-img" alt="{{ $item['title'] ?? '' }}">
-                        </div>
-                        @endif
-                        @if(!empty($item['title']))
-                        <div class="card-title">{{ $item['title'] }}</div>
-                        @endif
-                    </div>
-                </div>
+        <h1 class="gallery-page-title">{{ __('site.heading.gallery') }}</h1>
+        @if($galleryItems->isNotEmpty())
+            <div class="gallery-filters">
+                <button type="button" class="gallery-filter-btn active" data-type="all">{{ __('site.buttons.gallery_all') }}</button>
+                @foreach(['video', 'audio', 'image'] as $type)
+                    @if($galleryTypes->contains($type))
+                        <button type="button" class="gallery-filter-btn" data-type="{{ $type }}">{{ __('site.buttons.gallery_'.$type) }}</button>
+                    @endif
                 @endforeach
             </div>
-        </div>
-        @empty
-        <div class="text-center py-5">
-            <p class="text-muted">{{ __('site.no_data') ?? 'لا توجد عناصر في المعرض' }}</p>
-            <a href="{{ route('site.provider.show', $provider) }}" class="btn btn-blue">{{ __('site.buttons.back') ?? 'رجوع' }}</a>
-        </div>
-        @endforelse
+            <div class="row g-4">
+                @foreach($galleryItems as $item)
+                    @php $type = in_array($item['type'] ?? '', ['video', 'audio'], true) ? $item['type'] : 'image'; @endphp
+                    <div class="col-lg-3 col-6 gallery-item" data-type="{{ $type }}">
+                        <div class="gallery-media {{ $type !== 'image' ? 'gallery-media--'.$type : '' }}"
+                            style="cursor: pointer;"
+                            role="button"
+                            tabindex="0"
+                            onclick="openMediaModal('{{ $type }}', @js($item['url']), @js($item['title'] ?? ''), @js($item['description'] ?? ''))"
+                            onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();this.click();}">
+                            @if($type === 'video')
+                                <img src="{{ $assetBase }}/images/about.webp" class="testimonial-video-thumb" alt="{{ $item['title'] ?? '' }}" data-video-thumbnail="{{ e($item['url']) }}">
+                                <span class="gallery-play"><i class="fa-solid fa-play"></i></span>
+                            @elseif($type === 'audio')
+                                <span class="play-audio-btn" aria-hidden="true"><i class="fa-solid fa-play"></i></span>
+                                <img src="{{ $assetBase }}/images/audio-waves.png" class="waveform-img" alt="">
+                            @else
+                                <img src="{{ $item['url'] }}" alt="{{ $item['title'] ?? '' }}">
+                            @endif
+                        </div>
+                    </div>
+                @endforeach
+            </div>
+        @else
+            <div class="text-center py-5">
+                <p class="text-muted">{{ __('site.no_data') ?? 'لا توجد عناصر في المعرض' }}</p>
+                <a href="{{ route('site.provider.show', $provider) }}" class="btn btn-blue">{{ __('site.buttons.back') ?? 'رجوع' }}</a>
+            </div>
+        @endif
     </div>
 </div>
 <!-- Start Media Modal -->

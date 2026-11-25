@@ -26,7 +26,7 @@ return [
     'creator' => '',
     'subject' => '',
     'keywords' => '',
-    'watermark' => 'مشغول',
+    'watermark' => 'يَحْلى',
     'show_watermark' => false,
     'show_watermark_image' => false,
     'watermark_font' => 'sans-serif',

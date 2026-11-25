@@ -11,6 +11,7 @@
         </button>
     </div>
     <ul class="menu-list list-unstyled">
+        <li class="menu-title">{{ __('site.heading.my_account') }}</li>
         <li>
             <a href="{{ route('site.account.info') }}" class="{{ request()->routeIs('site.account.info') ? 'active' : '' }}">{{ __('site.heading.account_info') ?? 'معلومات الحساب' }}</a>
             </a>

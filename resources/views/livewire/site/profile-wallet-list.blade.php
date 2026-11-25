@@ -7,11 +7,11 @@
 
 {{-- Balance card: show when balance > 0 --}}
 @if($balance > 0)
-<div class="bg-blue rounded-4 p-4 mb-4 d-flex justify-content-between align-items-center text-white flex-wrap gap-3">
+<div class="wallet-balance bg-blue rounded-4 p-4 mb-4 d-flex justify-content-between align-items-center text-white flex-wrap gap-3">
     <div class="d-flex align-items-center gap-2">
-        <span class="fz20">{{ __('site.heading.wallet_balance') }}</span>
+        <span class="wallet-label fz20">{{ __('site.heading.wallet_balance') }}</span>
     </div>
-    <span class="fz32 fw-bold ms-2">{{ number_format($balance, 2) }} <i class="icon-saudi_riyal"></i></span>
+    <span class="wallet-amount fz32 fw-bold"><span class="amount">{{ number_format($balance, 2) }} <i class="icon-saudi_riyal"></i></span></span>
     <div>
         <button class="btn btn-green" type="button" data-bs-toggle="modal" data-bs-target="#withdrawModal">
             {{ __('site.buttons.withdrawal_request') }}
@@ -51,13 +51,13 @@
     @if($hasDeposits)
     <div class="tab-pane fade {{ $hasDeposits ? 'show active' : '' }}" id="tab-deposit" role="tabpanel">
         @foreach($depositTransactions as $index => $transaction)
-        <div class="bg-white p-3 rounded-4 mb-3 d-flex justify-content-between align-items-center shadow-sm flex-wrap gap-3">
+        <div class="wallet-item bg-white p-3 rounded-4 mb-3 d-flex justify-content-between align-items-center shadow-sm flex-wrap gap-3">
             <div class="d-flex align-items-center gap-2 flex-wrap">
                 <span class="badge badge-number">#{{ $transaction->id }}</span>
                 <span class="badge badge-number">#{{ $transaction->uuid ?? $transaction->id }}</span>
-                <span class="badge badge-number">{{ number_format((float) $transaction->amount, 2) }} <i class="icon-saudi_riyal"></i></span>
+                <span class="badge badge-number"><span class="amount">{{ number_format((float) $transaction->amount, 2) }} <i class="icon-saudi_riyal"></i></span></span>
             </div>
-            <div class="fw-bold text-dark">
+            <div class="wallet-item-label fw-bold text-dark">
                 {{ __('panel.enums.deposit') }}
             </div>
         </div>
@@ -72,13 +72,13 @@
     @if($hasWithdraws)
     <div class="tab-pane fade {{ !$hasDeposits && $hasWithdraws ? 'show active' : '' }}" id="tab-withdraw" role="tabpanel">
         @foreach($withdrawTransactions as $transaction)
-        <div class="bg-white p-3 rounded-4 mb-3 d-flex justify-content-between align-items-center shadow-sm flex-wrap gap-3">
+        <div class="wallet-item bg-white p-3 rounded-4 mb-3 d-flex justify-content-between align-items-center shadow-sm flex-wrap gap-3">
             <div class="d-flex align-items-center gap-2 flex-wrap">
                 <span class="badge badge-number">#{{ $transaction->id }}</span>
                 <span class="badge badge-number">#{{ $transaction->uuid ?? $transaction->id }}</span>
-                <span class="badge badge-number">{{ number_format((float) $transaction->amount, 2) }} <i class="icon-saudi_riyal"></i></span>
+                <span class="badge badge-number"><span class="amount">{{ number_format((float) $transaction->amount, 2) }} <i class="icon-saudi_riyal"></i></span></span>
             </div>
-            <div class="fw-bold text-dark">
+            <div class="wallet-item-label fw-bold text-dark">
                 {{ __('panel.enums.withdraw') }}
             </div>
         </div>
@@ -93,26 +93,24 @@
     @if($hasRequests)
     <div class="tab-pane fade {{ !$hasDeposits && !$hasWithdraws && $hasRequests ? 'show active' : '' }}" id="tab-requests" role="tabpanel">
         @foreach($withdrawalRequests as $request)
-        <div class="bg-white p-3 rounded-4 mb-3 d-flex justify-content-between align-items-center shadow-sm flex-wrap gap-3">
-            <div class="d-flex align-items-center gap-2 flex-wrap">
+        @php
+            $statusLabel = $request->status?->getLabel() ?? $request->status;
+            $statusClass = match($request->status?->value ?? '') {
+                'pending', 'waiting_transfer' => 'status-pending',
+                'transferred' => 'status-transferred',
+                'rejected' => 'status-rejected',
+                default => 'status-pending',
+            };
+        @endphp
+        <div class="wallet-item wallet-request bg-white rounded-4 mb-3 shadow-sm">
+            <div class="request-head d-flex align-items-center gap-2">
                 <span class="badge badge-number">#{{ $request->id }}</span>
                 <span class="badge badge-number">#{{ $request->id }}</span>
             </div>
-            <div class="fw-bold text-muted d-flex align-items-center gap-2">
-                <span class="text-dark">{{ __('forms.fields.amount') }}:</span>
-                {{ number_format((float) $request->amount, 2) }} <i class="icon-saudi_riyal"></i>
-            </div>
-            <div>
-                @php
-                    $statusLabel = $request->status?->getLabel() ?? $request->status;
-                    $statusColor = match($request->status?->value ?? '') {
-                        'pending', 'waiting_transfer' => 'warning',
-                        'transferred' => 'success',
-                        'rejected' => 'danger',
-                        default => 'secondary',
-                    };
-                @endphp
-                <span class="badge bg-{{ $statusColor }} text-dark px-3 py-2 rounded-pill">{{ $statusLabel }}</span>
+            <div class="request-row d-flex justify-content-between align-items-center gap-3">
+                <span class="request-label">{{ __('forms.fields.amount') }}:</span>
+                <span class="amount request-amount">{{ number_format((float) $request->amount, 2) }} <i class="icon-saudi_riyal"></i></span>
+                <span class="badge {{ $statusClass }}">{{ $statusLabel }}</span>
             </div>
         </div>
         @endforeach

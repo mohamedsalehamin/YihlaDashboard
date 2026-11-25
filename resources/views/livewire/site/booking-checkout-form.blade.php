@@ -56,10 +56,10 @@
     {{-- Date & Time Selection --}}
     <div class="booking-section mt-5">
         <h3 class="data-card-title mb-4">{{ __('site.heading.reservation_time') }}</h3>
-        <p class="text-muted mb-3">{{ __('site.heading.choose_date_time') }}</p>
+        <p class="coupon-hint mb-3">{{ __('site.heading.choose_date_time') }}</p>
         <div class="d-flex gap-2 mb-4 overflow-auto pb-2">
             @foreach($nextDays as $day)
-            <button type="button" class="btn d-flex flex-column align-items-center justify-content-center {{ $date === $day['date'] ? 'btn-blue' : 'btn-outline-secondary' }} px-3 py-2 rounded-4 {{ $day['disable'] ? 'disabled opacity-50' : '' }}"
+            <button type="button" class="btn booking-date-pill {{ $date === $day['date'] ? 'active' : '' }} {{ $day['disable'] ? 'disabled' : '' }}"
                 wire:click="$set('date', '{{ $day['date'] }}')"
                 {{ $day['disable'] ? 'disabled' : '' }}>
                 <div class="small">{{ $day['title'] }}</div>
@@ -203,19 +203,19 @@
                         @if(!empty($totals['discount'] ?? null) && $totals['discount'] != '0.00')
                         <div class="data-item border-0 p-0">
                             <span class="label"><i class="fa-solid fa-angles-left"></i> {{ __('site.heading.discount_code') }}</span>
-                            <span class="value">-{{ $totals['discount'] ?? '' }} <i class="icon-saudi_riyal"></i></span>
+                            <span class="value"><bdi dir="ltr">-{{ $totals['discount'] ?? '' }}</bdi> <i class="icon-saudi_riyal"></i></span>
                         </div>
                         @endif
                         @if(!empty($totals['points_discount'] ?? null) && $totals['points_discount'] != '0.00')
                         <div class="data-item border-0 p-0">
                             <span class="label"><i class="fa-solid fa-angles-left"></i> {{ __('site.heading.points_balance') }}</span>
-                            <span class="value">-{{ number_format(abs((float) ($totals['points_discount'] ?? 0)), 2, '.', '') }} <i class="icon-saudi_riyal"></i></span>
+                            <span class="value"><bdi dir="ltr">-{{ number_format(abs((float) ($totals['points_discount'] ?? 0)), 2, '.', '') }}</bdi> <i class="icon-saudi_riyal"></i></span>
                         </div>
                         @endif
                         @if(!empty($totals['wallet_discount'] ?? null) && $totals['wallet_discount'] != '0.00')
                         <div class="data-item border-0 p-0">
                             <span class="label"><i class="fa-solid fa-angles-left"></i> {{ __('site.heading.wallet_discount') }}</span>
-                            <span class="value">-{{ number_format(abs((float) ($totals['wallet_discount'] ?? 0)), 2, '.', '') }} <i class="icon-saudi_riyal"></i></span>
+                            <span class="value"><bdi dir="ltr">-{{ number_format(abs((float) ($totals['wallet_discount'] ?? 0)), 2, '.', '') }}</bdi> <i class="icon-saudi_riyal"></i></span>
                         </div>
                         @endif
                         @if(!empty($totals['taxes'] ?? null) && $totals['taxes'] != '0.00')
@@ -249,6 +249,8 @@
                                 <div class="method-icons">
                                     <img src="{{ asset('assets/site/images/visa.png') }}" alt="Visa">
                                     <img src="{{ asset('assets/site/images/mastercard.png') }}" alt="Mastercard">
+                                    <img src="{{ asset('assets/site/images/mada.png') }}" alt="Mada">
+                                    <img src="{{ asset('assets/site/images/apple-pay.webp') }}" alt="Apple Pay">
                                 </div>
                             </div>
                         </label>
@@ -278,12 +280,12 @@
                         </label>
                     </div>
                     @if($date && $timeFrom && $approveTerms)
-                    <button type="button" class="btn btn-green confirm-btn w-100 mt-4" wire:click="checkout" wire:loading.attr="disabled">
+                    <button type="button" class="btn btn-green confirm-btn" wire:click="checkout" wire:loading.attr="disabled">
                         <span wire:loading.remove>{{ __('site.buttons.confirm_reservation') }}</span>
                         <span wire:loading><span class="spinner-border spinner-border-sm"></span> {{ __('site.buttons.processing') }}</span>
                     </button>
                     @else
-                    <button type="button" class="btn btn-secondary confirm-btn w-100 mt-4" disabled>
+                    <button type="button" class="btn btn-green confirm-btn" disabled>
                         @if($date && $timeFrom)
                             {{ __('site.buttons.agree_to_terms_first') }}
                         @else

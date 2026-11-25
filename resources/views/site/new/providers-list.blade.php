@@ -14,13 +14,13 @@
     </nav>
 </div>
 
-<div class="common-page-wrapper pb-64">
+<div class="common-page-wrapper category-page products-section pb-64">
     <div class="container">
-        <h1 class="section-title mb-4">{{ $pageTitle }}</h1>
+        <div class="page-head"><h1 class="page-title">{{ $pageTitle }}</h1></div>
 
-        <div class="row">
+        <div class="row g-3 g-lg-4">
             @forelse($providers as $provider)
-                <div class="col-lg-3 col-md-4 col-6 mb-4">
+                <div class="col-6 col-md-4 col-lg-3">
                     <x-site.provider-card :provider="$provider" :show-map-button="true" />
                 </div>
             @empty

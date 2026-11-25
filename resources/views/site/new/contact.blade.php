@@ -17,11 +17,11 @@
         <div class="text-center">
             <h1 class="section-title mb-5">{{ __('site.heading.contact_us') }}</h1>
         </div>
-        <div class="row">
-            <div class="col-lg-6  mb-4">
+        <div class="row align-items-center">
+            <div class="col-lg-7 mb-4">
                 @livewire('contact-us')
             </div>
-            <div class="col-lg-5 offset-lg-1 mb-4">
+            <div class="col-lg-4 offset-lg-1 mb-4">
                 <div class="contact-info-box">
                     <div class="info-header">
                         <div class="corner-dot top-right"></div>
@@ -34,7 +34,7 @@
                         <ul class="contact-list list-unstyled">
                             <li>
                                 <a href="tel:{{ $settings->app_phone }}">
-                                    <div class="contact-icon"><i class="fa-solid fa-mobile-screen"></i></div>
+                                    <div class="contact-icon"><i class="fa-solid fa-mobile"></i></div>
                                     <div class="contact-text">{{ $settings->app_phone }}</div>
                                 </a>
                             </li>

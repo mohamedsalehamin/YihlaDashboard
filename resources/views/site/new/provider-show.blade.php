@@ -68,7 +68,8 @@
                     <div class="salon-stats">
                         <div class="stat-card">
                             <div class="stat-label">{{ __('site.heading.average_reviews') }}</div>
-                            <div class="stat-number">{{ $avgRate }}</div>
+                            @php [$avgInt, $avgDec] = array_pad(explode('.', (string) $avgRate, 2), 2, null); @endphp
+                            <div class="stat-number">{{ $avgInt }}@if($avgDec !== null)<span>.{{ $avgDec }}</span>@endif</div>
                             <div class="stat-stars">
                                 @for($i = 1; $i <= 5; $i++)
                                     <i class="fa-solid fa-star {{ $i <= round($avgRate) ? '' : 'text-muted' }}"></i>
@@ -77,13 +78,14 @@
                         </div>
                         <div class="stat-card">
                             <div class="stat-label">{{ __('site.heading.distance') }}</div>
-                            <div class="stat-number">{{ number_format($provider->distance / 1000, 1) }} <span>{{ __('site.heading.km') }}</span></div>
+                            @php [$distInt, $distDec] = explode('.', number_format($provider->distance / 1000, 1, '.', ''), 2) + [1 => '0']; @endphp
+                            <div class="stat-number">{{ $distInt }}<span>.{{ $distDec }}</span> <span>{{ __('site.heading.km') }}</span></div>
                             <div class="stat-icon">
                                 <i class="fa-solid fa-location-dot"></i>
                             </div>
                         </div>
                     </div>
-                    <a href="{{ route('site.provider.gallery', $provider) }}" class="btn btn-blue mt-4 px-5">{{ __('site.heading.gallery') }}</a>
+                    <a href="{{ route('site.provider.gallery', $provider) }}" class="salon-gallery-link">{{ __('site.heading.gallery') }}</a>
                 </div>
 
             </div>
@@ -153,24 +155,24 @@
                             @foreach($availableCoupons as $coupon)
                             <div class="swiper-slide">
                                 <div class="data-card h-100">
-                                    <div class="data-list services-data-list mb-2">
+                                    <div class="data-list services-data-list">
                                         <div class="data-item">
-                                            <span class="label"><i class="fa-solid fa-angles-left text-green ms-2"></i>
+                                            <span class="label"><i class="fa-solid fa-angles-left text-green"></i>
                                                 {{ __('site.heading.discount_value') }}</span>
                                             <span class="value">{{ $coupon['display_value'] }}@if($coupon['discount_type'] === 'fixed') <i class="icon-saudi_riyal"></i>@endif</span>
                                         </div>
                                         <div class="data-item">
-                                            <span class="label"><i class="fa-solid fa-angles-left text-green ms-2"></i>
+                                            <span class="label"><i class="fa-solid fa-angles-left text-green"></i>
                                                 {{ __('site.heading.expiration_date') }}</span>
                                             <span class="value">{{ $coupon['end_date'] }}</span>
                                         </div>
                                         <div class="data-item">
-                                            <span class="label"><i class="fa-solid fa-angles-left text-green ms-2"></i>
+                                            <span class="label"><i class="fa-solid fa-angles-left text-green"></i>
                                                 {{ __('site.heading.coupon_applies_to') }}</span>
                                             <span class="value">{{ $coupon['applies_to'] ?? '—' }}</span>
                                         </div>
                                         <div class="data-item">
-                                            <span class="label"><i class="fa-solid fa-angles-left text-green ms-2"></i>
+                                            <span class="label"><i class="fa-solid fa-angles-left text-green"></i>
                                                 {{ __('site.heading.coupon_min_order') }}</span>
                                             <span class="value">
                                                 @if(!empty($coupon['min_order_amount']))
@@ -184,9 +186,9 @@
                                             </span>
                                         </div>
                                     </div>
-                                    <div class="d-flex align-items-center justify-content-between mt-4 border-top pt-3">
-                                        <span class="text-danger">{{ __('site.heading.terms_and_conditions') }}</span>
-                                        <button type="button" class="btn btn-blue py-2 px-5 fz16 copy-coupon-btn" data-code="{{ $coupon['code'] }}" data-copy-text="{{ __('site.buttons.copy') }}" data-copied-text="{{ __('forms.fields.copied') }}">{{ __('site.buttons.copy') }}</button>
+                                    <div class="d-flex align-items-center justify-content-between mt-3 border-top pt-3">
+                                        <span class="text-danger coupon-terms">{{ __('site.heading.terms_and_conditions') }}</span>
+                                        <button type="button" class="btn btn-copy copy-coupon-btn" data-code="{{ $coupon['code'] }}" data-copy-text="{{ __('site.buttons.copy') }}" data-copied-text="{{ __('forms.fields.copied') }}"><i class="fa-regular fa-copy"></i> {{ __('site.buttons.copy') }}</button>
                                     </div>
                                 </div>
                             </div>
@@ -318,6 +320,7 @@
             @endif
             
 
+                <div class="booking-bar-wrap">
                 <div class="booking-bar d-none" id="provider-booking-bar"
                      data-provider-id="{{ $provider->id }}"
                      data-reservation-fees="{{ $reservationFees }}"
@@ -333,9 +336,10 @@
                             @csrf
                             <input type="hidden" name="seat_id" id="provider-cart-seat-id" value="">
                             <div id="provider-cart-services-inputs"></div>
-                            <button type="submit" class="btn btn-green booking-btn" id="provider-booking-btn">{{ __('site.buttons.book_now') ?? 'احجز الان' }}</button>
+                            <button type="submit" class="btn btn-green booking-btn" id="provider-booking-btn"><i class="fa-light fa-calendar"></i> {{ __('site.buttons.book_now') ?? 'احجز الان' }}</button>
                         </form>
                     </div>
+                </div>
                 </div>
 
                 <ul class="nav nav-tabs desc-tabs" role="tablist">
@@ -366,11 +370,11 @@
                     @endif
 
                     <div class="tab-pane" id="schedule-tab" role="tabpanel">
-                        <div class="data-card w-md-50 bg-transparent shadow-none border-0 ps-0">
+                        <div class="data-card">
                             <div class="data-list working-hours ">
                             @forelse($workingDays as $wd)
                                 <div class="data-item">
-                                    <span class="label"><i class="fa-solid fa-angles-left text-green ms-2"></i> {{ $wd['day'] ?? $wd['day_name'] }}</span>
+                                    <span class="label"><i class="fa-solid fa-angles-left text-green"></i> {{ $wd['day'] ?? $wd['day_name'] }}</span>
                                     <span class="value">{{ $wd['from'] ?? '' }} - {{ $wd['to'] ?? '' }}</span>
                                 </div>
                             @empty
@@ -603,13 +607,9 @@ document.addEventListener('DOMContentLoaded', function() {
             var copyText = this.getAttribute('data-copy-text') || 'Copy';
             var copiedText = this.getAttribute('data-copied-text') || 'Copied!';
             function showCopied() {
-                btn.textContent = copiedText;
-                btn.classList.remove('btn-blue');
-                btn.classList.add('btn-green');
+                btn.innerHTML = '<i class="fa-solid fa-check"></i> ' + copiedText;
                 setTimeout(function() {
-                    btn.textContent = copyText;
-                    btn.classList.remove('btn-green');
-                    btn.classList.add('btn-blue');
+                    btn.innerHTML = '<i class="fa-regular fa-copy"></i> ' + copyText;
                 }, 1000);
             }
             if (navigator.clipboard && navigator.clipboard.writeText) {

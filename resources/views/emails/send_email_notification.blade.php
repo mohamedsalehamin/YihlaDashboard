@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>مشغول</title>
+    <title>يَحْلى</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -63,7 +63,7 @@
     <div class="email-container">
         <!-- Header -->
         <div class="email-header">
-            <h1>مشغول</h1>
+            <h1>يَحْلى</h1>
 
         </div>
 
@@ -76,7 +76,7 @@
         <!-- Footer -->
         <div class="email-footer">
             <p>أطيب التحيات</p>
-            <p>مشغول</p>
+            <p>يَحْلى</p>
         </div>
     </div>
 </body>
