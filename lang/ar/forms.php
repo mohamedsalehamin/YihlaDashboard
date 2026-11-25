@@ -13,6 +13,8 @@ return [
         'commission_percent' => 'أدخل عمولة المنصة كنسبة مئوية (٠–١٠٠)، مثل ٥ لـ ٪٥.',
     ],
     'fields' => [
+        'page_intro' => 'المحتوى العلوي (المقدمة)',
+        'page_image' => 'صورة الصفحة',
         'is_free_plan' => 'باقة مجانية',
         'commission_percent' => 'العمولة',
         'e_invoice_url' => 'فاتورة الكترونية',

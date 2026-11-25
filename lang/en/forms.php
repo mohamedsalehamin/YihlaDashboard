@@ -12,6 +12,8 @@ return [
         'commission_percent' => 'Enter the platform commission as a percentage (0–100), e.g. 5 for 5%.',
     ],
     'fields' => [
+        'page_intro' => 'Top content (intro)',
+        'page_image' => 'Page image',
         'is_free_plan' => 'Free plan',
         'commission_percent' => 'Commission',
         'e_invoice_url' => 'E Invoice',

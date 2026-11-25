@@ -5,6 +5,7 @@ namespace App\ContentModule\Resources;
 use LaraZeus\SpatieTranslatable\Resources\Concerns\Translatable;
 use Filament\Schemas\Schema;
 use Filament\Schemas\Components\Section;
+use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\RichEditor;
 use Filament\Actions\Action;
 use Filament\Actions\EditAction;
@@ -73,6 +74,21 @@ class PageResource extends Resource {
 
                     ])
                     ->columns(2),
+                Section::make(__('sections.about_page_intro'))
+                    ->description(__('sections.about_page_intro_hint'))
+                    ->schema([
+                        Textarea::make('intro')
+                            ->label(__('forms.fields.page_intro'))
+                            ->rows(5)
+                            ->columnSpan(['xl' => 2]),
+                        FileUpload::make('image')
+                            ->label(__('forms.fields.page_image'))
+                            ->image()
+                            ->columnSpan(['xl' => 2]),
+                    ])
+                    ->columns(2)
+                    ->visible(fn (?Model $record) => $record
+                        && (int) data_get(app(\App\DefaultPanel\Settings\LandingSettings::class)->content, 'site_pages.about_us') === (int) $record->getKey()),
                 Section::make(__('sections.seo_meta'))
                     ->schema([
                         Textarea::make('meta_description')

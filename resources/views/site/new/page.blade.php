@@ -5,7 +5,12 @@
     $locale = app()->getLocale();
     $landingSettings = app(\App\DefaultPanel\Settings\LandingSettings::class);
     $isAboutPage = (int) data_get($landingSettings->content, 'site_pages.about_us') === (int) $page->id;
-    $aboutIntro = $isAboutPage ? data_get($landingSettings->content, 'about.'.$locale, []) : [];
+    // The About page's top content and image come from the page itself (not from the home section settings)
+    $pageIntro = $isAboutPage ? trim((string) $page->getTranslation('intro', $locale, false)) : '';
+    $pageImageRaw = $isAboutPage ? (string) $page->image : '';
+    $pageImage = $pageImageRaw === ''
+        ? asset('assets/site/images/about.webp')
+        : (str_starts_with($pageImageRaw, 'http') ? $pageImageRaw : \Illuminate\Support\Facades\Storage::url($pageImageRaw));
 @endphp
 
 <!-- Start Breadcrumb -->
@@ -25,19 +30,17 @@
             <h1 class="section-title mb-5">{{ $page->getTranslation('title', $locale) }}</h1>
         </div>
 
-        @if(!empty($aboutIntro['about']) || !empty($aboutIntro['image']))
+        @if($isAboutPage && ($pageIntro !== '' || $pageImageRaw !== ''))
             <div class="row align-items-md-center mb-5">
                 <div class="col-lg-6">
                     <div class="about-wrapper">
                         <div class="about-content">
-                            <p class="description">{{ $aboutIntro['about'] ?? '' }}</p>
+                            <p class="description">{{ $pageIntro }}</p>
                         </div>
                     </div>
                 </div>
                 <div class="col-lg-5 offset-lg-1">
-                    @if(!empty($aboutIntro['image']))
-                        <img src="{{ $aboutIntro['image'] }}" loading="lazy" alt="{{ $page->getTranslation('title', $locale) }}" class="about-img img-fluid">
-                    @endif
+                    <img src="{{ $pageImage }}" loading="lazy" alt="{{ $page->getTranslation('title', $locale) }}" class="about-img img-fluid">
                 </div>
             </div>
         @endif

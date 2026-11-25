@@ -1,5 +1,7 @@
 <?php
 return [
+    "about_page_intro" => "About page intro",
+    "about_page_intro_hint" => "The text and image shown above the page content (this section appears for the About us page only)",
     "shift_no" => "Shift #:no",
     "providers_by_city" => "Providers according to the city",
     "providers_by_state" => "Providers according to the state",

@@ -18,8 +18,8 @@ class Page extends Model implements Sitemapable
 {
     use HasFactory, HasTranslations, Publishable;
 
-    protected $fillable = ['title', 'description', 'slug', 'status', 'meta_description', 'meta_keywords'];
-    public $translatable = ['title', 'description', 'slug', 'meta_description', 'meta_keywords'];
+    protected $fillable = ['title', 'description', 'intro', 'image', 'slug', 'status', 'meta_description', 'meta_keywords'];
+    public $translatable = ['title', 'description', 'intro', 'slug', 'meta_description', 'meta_keywords'];
 
     protected static function booted(): void
     {
