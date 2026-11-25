@@ -89,19 +89,37 @@ class ContentController extends Controller
             ?: Str::limit(strip_tags($post->getTranslation('description', $locale)), 160);
         $metaKeywords = $post->getTranslation('meta_keywords', $locale) ?: '';
 
-        $relatedPosts = Post::enabled()
+        $this->recordPostView($post);
+
+        $mostReadPosts = Post::enabled()
             ->where('id', '!=', $post->id)
-            ->inRandomOrder()
+            ->orderByDesc('views')
+            ->orderByDesc('publish_date')
             ->limit(3)
             ->get();
 
         return view('site.new.blog-show', array_merge($this->sharedData(), [
             'post' => $post,
-            'relatedPosts' => $relatedPosts,
+            'mostReadPosts' => $mostReadPosts,
             'title' => $title,
             'metaDescription' => $metaDescription,
             'metaKeywords' => $metaKeywords,
         ]));
+    }
+
+    /**
+     * Count a post view once per session so the "most read" list is not inflated by reloads.
+     */
+    protected function recordPostView(Post $post): void
+    {
+        $key = 'post_viewed_' . $post->getKey();
+
+        if (session()->has($key)) {
+            return;
+        }
+
+        $post->increment('views');
+        session([$key => true]);
     }
 
     public function reviews()

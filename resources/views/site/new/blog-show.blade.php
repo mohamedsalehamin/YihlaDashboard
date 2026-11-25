@@ -78,15 +78,15 @@
         </div>
     </div>
 
-    @if($relatedPosts->isNotEmpty())
+    @if($mostReadPosts->isNotEmpty())
     <div class="related-posts mb-5">
         <div class="container">
             <hr>
             <div class="text-center">
-                <div class="section-title">{{ __('site.heading.you_may_also_like') }}</div>
+                <div class="section-title">{{ __('site.heading.most_read') }}</div>
             </div>
             <div class="row">
-                @foreach($relatedPosts as $relatedPost)
+                @foreach($mostReadPosts as $relatedPost)
                 <div class="col-lg-4 mb-4">
                     <div class="single-blog-card">
                         <div class="blog-img">
