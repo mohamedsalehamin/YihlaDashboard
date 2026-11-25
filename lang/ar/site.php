@@ -501,6 +501,7 @@ return [
         'most_read' => 'الأكثر قراءة',
         'share_article' => 'مشاركة المقالة',
         'book_service' => 'حجز الخدمة',
+        'thanks_for_choosing' => 'شكراً لاختيارك يَحْلى',
         'booking_completed' => 'تم الحجز بنجاح',
         'booking_completed_text' => 'تم انشاء الحجز رقم #:order_id بنجاح',
         'booking_failed' => 'فشل الدفع',
@@ -605,6 +606,7 @@ return [
         'rate_order' => 'تقييم الطلب',
     ],
     'buttons' => [
+        'back_to_home_page' => 'العودة الى الرئيسية',
         'gallery_all' => 'الكل',
         'gallery_video' => 'فيديو',
         'gallery_audio' => 'صوت',

@@ -22,19 +22,19 @@
                     <img class="success-icon img-fluid" src="{{ asset('assets/site/images/done.webp') }}" alt="">
 
                     @if($status === 'success')
-                        <h1 class="success-title">{{ __('site.heading.booking_completed') }}</h1>
+                        <h1 class="success-title">{{ __('site.heading.thanks_for_choosing') }}</h1>
                         <p class="success-subtitle">{{ __('site.heading.booking_completed_text', ['order_id' => $order_id ?? '-']) }}</p>
                         <div class="success-actions">
                             @if($order_id)
                                 <a href="{{ route('site.booking.show', $order_id) }}" class="btn btn-green">{{ __('site.heading.booking_details') }}</a>
                             @endif
-                            <a href="{{ route('site.home') }}" class="btn btn-blue">{{ __('site.heading.home') }}</a>
+                            <a href="{{ route('site.home') }}" class="btn btn-blue">{{ __('site.buttons.back_to_home_page') }}</a>
                         </div>
                     @else
                         <h1 class="success-title">{{ __('site.heading.booking_failed') }}</h1>
                         <p class="success-subtitle">{{ __('site.heading.booking_failed_text') }}</p>
                         <div class="success-actions">
-                            <a href="{{ route('site.home') }}" class="btn btn-blue">{{ __('site.heading.home') }}</a>
+                            <a href="{{ route('site.home') }}" class="btn btn-blue">{{ __('site.buttons.back_to_home_page') }}</a>
                         </div>
                     @endif
 

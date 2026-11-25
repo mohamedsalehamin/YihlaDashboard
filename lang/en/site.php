@@ -480,6 +480,7 @@ return [
         'most_read' => 'Most Read',
         'share_article' => 'Share article',
         'book_service' => 'Book Service',
+        'thanks_for_choosing' => 'Thank you for choosing Yihla',
         'booking_completed' => 'Booking Completed',
         'booking_completed_text' => 'Your booking #:order_id has been created successfully.',
         'booking_failed' => 'Payment Failed',
@@ -583,6 +584,7 @@ return [
         'rate_order' => 'Rate Order',
     ],
     'buttons' => [
+        'back_to_home_page' => 'Back to Home',
         'gallery_all' => 'All',
         'gallery_video' => 'Video',
         'gallery_audio' => 'Audio',
