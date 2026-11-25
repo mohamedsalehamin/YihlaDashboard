@@ -68,6 +68,7 @@
         </div>
         <div class="col-lg-6">
             <div class="mb-3">
+                <label class="form-label mb-3">{{ __('site.fields.gender') }}</label>
                 @if($gender)
                     <input type="text" class="form-control auth-input" value="{{ $gender === 'male' ? __('site.enum.male') : __('site.enum.female') }}" readonly disabled>
                     <input type="hidden" wire:model="gender">

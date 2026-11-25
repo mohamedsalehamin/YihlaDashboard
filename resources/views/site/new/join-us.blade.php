@@ -20,7 +20,7 @@
     <div class="container mb-5">
         <div class="text-center mb-5">
             <h2 class="login-main-title">{{ __('site.heading.join_us_as_a_provider') }}</h2>
-            <p class="text-muted mb-0 mt-2">{{ __('site.join.flow_intro') }}</p>
+            <!-- <p class="text-muted mb-0 mt-2">{{ __('site.join.flow_intro') }}</p> -->
         </div>
     </div>
 
